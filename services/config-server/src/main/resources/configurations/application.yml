@@ -1,0 +1,13 @@
+#all the other yml file will inherit from this one
+#generic configuration
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+spring:
+  cloud:
+    config:
+      override.system-properties: false #default is true. Don't want to overwrite any properties

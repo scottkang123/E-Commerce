@@ -1,0 +1,11 @@
+spring:
+  data:
+    mongodb:
+      username: scottkang123
+      password: scottkang123
+      host: localhost
+      port: 27017 #defined in the docker compose yml file
+      database: customer
+      authentication-database: admin
+server:
+  port: 8090 #technically if multiple instances this is not necessary

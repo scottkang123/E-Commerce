@@ -1,0 +1,36 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/order #name of the db is product
+    username: scottkang123
+    password: scottkang123
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+server:
+  port: 8070
+
+application:
+  config:
+    customer-url: http://localhost:8222/api/v1/customers
+    product-url: http://localhost:8222/api/v1/products
+    payment-url: http://localhost:8222/api/v1/payments
+    #same private network - registered in eureka
+    #should I fetch from microservice url or gateway url?
+    #why not use the port 8090 for customer which have been set up
+    #B/C might want to scale up!!! can have multiple instances of customer
+    #port could be randomly generated for each
+    #so always use api gateway to connect to the service
+    #api gateway is public - will redirect to customer using load balancing
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.type.mapping: orderConfirmation:com.ecommerce.coreservices.kafka.OrderConfirmation
+        #what we defined in OrderProducer
+        #producer need to inform consumer where the object is coming from - it is safe to consume

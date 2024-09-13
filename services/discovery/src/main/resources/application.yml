@@ -1,0 +1,5 @@
+spring:
+  config:
+    import: optional:configserver:http://localhost:8888 #where to fetch configuration. optional -> if cannot find still try
+  application:
+    name: discovery-service #important because when go back to config server, it will look for this name yml file
