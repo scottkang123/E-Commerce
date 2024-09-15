@@ -19,7 +19,7 @@ public class OrderProducer {
                 .withPayload(orderConfirmation)
                 .setHeader(KafkaHeaders.TOPIC, "order-topic")
                 .build();
-        //order-topic is from the orderconfirmation file
+        //order-topic is from the KafkaOrderTopicConfig file
 
         kafkaTemplate.send(message);
 

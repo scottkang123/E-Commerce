@@ -11,3 +11,4 @@ spring:
           #where config server should search for locations of different configuration files for each microservice
 server:
   port: 8888
+

@@ -1,0 +1,38 @@
+spring:
+  data:
+    mongodb:
+      username: scott
+      password: kang
+      host: localhost
+      port: 27018 #defined in the docker compose yml file
+      database: customer
+      authentication-database: admin
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: paymentGroup, orderGroup
+      auto-offset-reset: earliest #if missing info
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: '*' #what are trusted? #can be com.ecommerce.coreservices
+        spring.json.type.mapping: orderConfirmation:com.ecommerce.coreservices.kafka.order.OrderConfirmation, paymentConfirmation:com.ecommerce.coreservices.kafka.payment.PaymentConfirmation
+  application:
+    name: notification-service
+  mail:
+    host: localhost
+    port: 1025
+    username: scottkang123
+    password: scottkang123
+    properties:
+      mail:
+        smtp:
+          trust: "*"
+        auth: true
+        starttls:
+          enabled: true
+        connectiontimeout: 5000
+        timeout: 3000
+        writetimeout: 5000
+server:
+  port: 8040

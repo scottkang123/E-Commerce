@@ -31,29 +31,31 @@ services:
 
   mongodb:
     container_name: ms_mongo_db
-    image: mongo
+    image: mongo:latest
     ports:
-      - 27017:27017 #default port for mongodb
+      - 27018:27017 #default port for mongodb
     volumes:
       - mongo:/data
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=scottkang123
-      - MONGO_INITDB_ROOT_PASSWORD=scottkang123
+      - MONGO_INITDB_ROOT_USERNAME=scott
+      - MONGO_INITDB_ROOT_PASSWORD=kang
     networks:
       - microservices-net
 
   mongo-express:
     container_name: ms_mongo_express
-    image: mongo-express
+    image: mongo-express:latest
     restart: always
     ports:
       - 8081:8081
     environment:
-      - ME_CONFIG_MONGODB_ADMINUSERNAME=scottkang123
-      - ME_CONFIG_MONGODB_ADMINPASSWORD=scottkang123
-      - ME_CONFIG_MONGODB_SERVER=ms_mongo_db
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=scott
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=kang
+      - ME_CONFIG_MONGODB_SERVER=mongodb
     networks:
       - microservices-net
+    depends_on:
+      - mongodb
 
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
@@ -80,7 +82,7 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181 #zookeeper instance name
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KKAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092 #port for kafka
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092 #port for kafka
     networks:
       - microservices-net
 
@@ -90,6 +92,27 @@ services:
     ports:
       - 1080:1080 #mail dev server
       - 1025:1025 #SMTP server
+
+  zipkin:
+    container_name: zipkin
+    image: openzipkin/zipkin
+    ports:
+      - 9411:9411
+    networks:
+      - microservices-net
+
+  keycloak:
+    container_name: keycloak-ms
+    image: quay.io/keycloak/keycloak:24.0.2
+    ports:
+      - 9098:8080
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    networks:
+      - microservices-net
+    command:
+      - "start-dev"
 
 networks:
   microservices-net:

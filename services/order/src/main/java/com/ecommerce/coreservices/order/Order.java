@@ -31,7 +31,7 @@ public class Order {
     private PaymentMethod paymentMethod;
     private String customerId; //customer db uses String so String
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade=CascadeType.ALL,orphanRemoval = true)
     private List<OrderLine> orderLines;
 
     @CreatedDate

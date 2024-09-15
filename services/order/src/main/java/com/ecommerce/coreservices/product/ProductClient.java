@@ -17,10 +17,10 @@ import static org.springframework.http.HttpMethod.POST;
 @Service
 @RequiredArgsConstructor
 public class ProductClient {
-    @Value("${application.config")
+    @Value("${application.config.product-url}")
     private String productUrl;
-    private final RestTemplate restTemplate;
 
+    private final RestTemplate restTemplate;
     public List<PurchaseResponse> purchaseProducts(List<PurchaseRequest> requestBody){
 
         HttpHeaders headers = new HttpHeaders();

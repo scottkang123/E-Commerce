@@ -11,3 +11,8 @@ spring:
   cloud:
     config:
       override.system-properties: false #default is true. Don't want to overwrite any properties
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0 #range from 0 to 1 that a trace will be sampled

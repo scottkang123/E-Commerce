@@ -14,3 +14,5 @@ public interface CustomerClient {
     @GetMapping("/{customer-id}") //in customer service we have api for finding a customer
     Optional<CustomerResponse> findCustomerById(@PathVariable("customer-id") String customerId);
 }
+
+
